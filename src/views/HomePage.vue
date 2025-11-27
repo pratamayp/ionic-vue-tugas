@@ -68,15 +68,17 @@ const loading = ref(false);
 const fetchCoins = async () => {
   loading.value = true;
   try {
-    const res = await fetch('https://api.coinlore.net/api/tickers/');
+    const apiUrl = 'https://api.coinlore.net/api/tickers/'
+    const res = await fetch(apiUrl);
     const data = await res.json();
 
     coins.value = data.data.slice(0, 20);
-  } catch (e) {
-    console.error('Gagal mengambil data', e);
+  } catch (error) {
+    console.error('Gagal mengambil data', error);
+  } finally {
+    loading.value = false;
   }
-  loading.value = false;
-};
+} 
 
 onMounted(fetchCoins);
 </script>
